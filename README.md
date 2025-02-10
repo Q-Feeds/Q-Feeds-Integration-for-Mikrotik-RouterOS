@@ -1,4 +1,4 @@
-#Q-Feeds Blocklist Update Script
+Q-Feeds Blocklist Update Script
 
 This repository contains a MikroTik RouterOS script that automates the update of your Q-Feeds blocklist. The script downloads the latest Q-Feeds blocklist, cleans up previous entries, and imports the new addresses into your firewall, keeping your security measures up-to-date without manual intervention.
 
