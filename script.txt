@@ -8,7 +8,7 @@
 :delay 5
 # 1. Fetch the new Q-Feeds.rsc file
 /tool fetch \
-    url="https://api.qfeeds.com/api.php?feed_type=malware_ip&api_token=XXXXXXXXXX&type=rsc" \
+    url="https://api.qfeeds.com/api.php?feed_type=malware_ip&api_token=XXXXXXXXXX&limit=100000&type=rsc" \
     mode=https \
     dst-path="Q-Feeds.rsc" \
     keep-result=yes
