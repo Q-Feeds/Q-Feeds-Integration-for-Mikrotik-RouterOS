@@ -1,0 +1,35 @@
+:log info "Qfeeds blocklist update started..."
+
+# Remove any existing Q-Feeds.rsc file
+:if ([:len [/file find name="Q-Feeds.rsc"]] > 0) do={
+    /file remove Q-Feeds.rsc
+    :log info "Removed old Q-Feeds.rsc file."
+}
+:delay 5
+# 1. Fetch the new Q-Feeds.rsc file
+/tool fetch \
+    url="https://api.qfeeds.com/api.php?feed_type=malware_ip&api_token=XXXXXXXXXX&type=rsc" \
+    mode=https \
+    dst-path="Q-Feeds.rsc" \
+    keep-result=yes
+:log info "Fetch command executed, waiting for file..."
+:delay 5
+# Wait until the file is available
+:local fileCount [:len [/file find name="Q-Feeds.rsc"]]
+:while ($fileCount = 0) do={
+    :log info "Waiting for Q-Feeds.rsc to appear..."
+    :delay 2
+    :set fileCount [:len [/file find name="Q-Feeds.rsc"]]
+}
+:log info "Successfully fetched Q-Feeds.rsc."
+
+# 2. Remove old entries in the Qfeeds-BlockList
+/ip firewall address-list remove [find list="Qfeeds-BlockList"]
+:log info "Removed old Qfeeds-BlockList entries."
+
+:delay 2
+
+# 3. Import the new addresses from Q-Feeds.rsc
+/import file=Q-Feeds.rsc
+:log info "Imported new blocklist from Q-Feeds.rsc."
+:log info "Qfeeds blocklist update complete."
