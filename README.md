@@ -37,7 +37,7 @@ In order to use the blocklist you need to obtain an API-key which can be freely 
 
 ### Step 3: Configure API Token
 Before deploying, replace `XXXXXXXXXXXXXXX` with your Q-Feeds API token in both scripts:
-- In `Malware Import FULL.txt`: Replace the token (Optionally add `&limit=xxxx` for memory limited devices)
+- In `Malware Import FULL.txt`: Replace the token (Optionally add `&limit=xxxx` for memory limited devices or limited resources in general)
 - In `Malware Import DIFF.txt`: Replace the token
 
 ### Step 4: Deploy to RouterOS
