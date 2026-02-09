@@ -40,7 +40,7 @@ Before deploying, configure both scripts:
 
 **API Token:**
 - Replace `XXXXXXXXXXXXXXX` with your Q-Feeds API token in both scripts
-- In `Malware Import FULL.rsc`: Optionally add `&limit=xxxx` parameter for memory-limited devices
+- The FULL script automatically uses pagination (10,000 IPs per page) and stops when all data is fetched
 
 **Dynamic Storage Option (Recommended):**
 - Set `:local useDynamic "yes";` to store entries in RAM only (prevents flash wear)
@@ -92,7 +92,9 @@ Performs a complete refresh of the malware IP blocklist:
 ┌─────────────────────────────────────────┐
 │  1. Disable Differential Scheduler     │
 │  2. Rename Existing Entries            │
-│  3. Download All Pages (up to 199)      │
+│  3. Download Pages Automatically        │
+│     (10,000 IPs per page, stops when   │
+│      no more data available)           │
 │  4. Import All IPs to "Malware-List"    │
 │  5. Validate Import Success             │
 │  6. Remove Old Entries (if successful)  │
@@ -102,10 +104,11 @@ Performs a complete refresh of the malware IP blocklist:
 ```
 
 **Features:**
+- ✅ **Automatic Pagination**: Fetches data in pages of 10,000 IPs and stops automatically when complete
 - ✅ **Automatic Rollback**: Restores previous list if import fails
-- ✅ **IPv4 & IPv6 Support**: Handles both IP address formats
+- ✅ **IPv4 & IPv6 Support**: Handles both IP address formats (RouterOS validates addresses)
 - ✅ **CIDR Support**: Supports CIDR notation (e.g., `192.168.1.0/24`)
-- ✅ **Input Validation**: Proper IP address validation (0-255 for IPv4 octets)
+- ✅ **Efficient API Usage**: Only makes necessary API calls, stops early when done
 
 **When to run:** Weekly or daily for complete synchronization
 
@@ -145,11 +148,12 @@ This ensures:
 
 The scripts include several security and reliability features:
 
-- ✅ **Input Validation**: Proper IPv4 (0-255 octets) and IPv6 address validation
+- ✅ **Address Validation**: RouterOS validates all IP addresses when adding them (invalid addresses are automatically skipped)
 - ✅ **CIDR Support**: Handles both plain IPs and CIDR notation (e.g., `192.168.1.0/24`)
 - ✅ **Automatic Rollback**: Restores previous list if import fails (prevents loss of protection)
 - ✅ **Flash Wear Protection**: Optional RAM-only storage prevents flash degradation
 - ✅ **Error Handling**: Comprehensive error handling with logging
+- ✅ **Efficient Pagination**: Automatically fetches data in optimal page sizes and stops when complete
 
 ---
 
@@ -189,7 +193,7 @@ Before deploying, configure both scripts:
 
 **What to change:**
 - In `Malware Import FULL.rsc` (line 3): Replace `XXXXXXXXXXXXXXX` with your token
-  - Optional: Add `&limit=xxxx` parameter for memory-limited devices
+  - The script automatically uses pagination (10,000 IPs per page) to handle large datasets efficiently
 - In `Malware Import DIFF.rsc` (line 3): Replace `XXXXXXXXXXXXXXX` with your token
 
 **Dynamic Storage Option (Line 6):**
