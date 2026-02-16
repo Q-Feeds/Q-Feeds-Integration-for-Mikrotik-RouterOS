@@ -40,7 +40,7 @@ Before deploying, configure both scripts:
 
 **API Token:**
 - Replace `XXXXXXXXXXXXXXX` with your Q-Feeds API token in both scripts
-- The FULL script automatically uses pagination (10,000 IPs per page) and stops when all data is fetched
+- The FULL script automatically uses pagination (4,000 IPs per page) and stops when all data is fetched
 
 **Dynamic Storage Option (Recommended):**
 - Set `:local useDynamic "yes";` to store entries in RAM only (prevents flash wear)
@@ -93,7 +93,7 @@ Performs a complete refresh of the malware IP blocklist:
 │  1. Disable Differential Scheduler     │
 │  2. Rename Existing Entries            │
 │  3. Download Pages Automatically        │
-│     (10,000 IPs per page, stops when   │
+│     (4,000 IPs per page, stops when   │
 │      no more data available)           │
 │  4. Import All IPs to "Malware-List"    │
 │  5. Validate Import Success             │
@@ -104,7 +104,7 @@ Performs a complete refresh of the malware IP blocklist:
 ```
 
 **Features:**
-- ✅ **Automatic Pagination**: Fetches data in pages of 10,000 IPs and stops automatically when complete
+- ✅ **Automatic Pagination**: Fetches data in pages of 4,000 IPs and stops automatically when complete
 - ✅ **Automatic Rollback**: Restores previous list if import fails
 - ✅ **IPv4 & IPv6 Support**: Handles both IP address formats (RouterOS validates addresses)
 - ✅ **CIDR Support**: Supports CIDR notation (e.g., `192.168.1.0/24`)
@@ -193,7 +193,7 @@ Before deploying, configure both scripts:
 
 **What to change:**
 - In `Malware Import FULL.rsc` (line 3): Replace `XXXXXXXXXXXXXXX` with your token
-  - The script automatically uses pagination (10,000 IPs per page) to handle large datasets efficiently
+  - The script automatically uses pagination (4,000 IPs per page) to handle large datasets efficiently
 - In `Malware Import DIFF.rsc` (line 3): Replace `XXXXXXXXXXXXXXX` with your token
 
 **Dynamic Storage Option (Line 6):**
