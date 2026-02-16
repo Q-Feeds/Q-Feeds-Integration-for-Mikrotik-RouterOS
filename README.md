@@ -89,18 +89,18 @@ This solution provides automated malware IP blocklist updates for MikroTik Route
 Performs a complete refresh of the malware IP blocklist:
 
 ```
-┌─────────────────────────────────────────┐
-│  1. Disable Differential Scheduler     │
-│  2. Rename Existing Entries            │
-│  3. Download Pages Automatically        │
-│     (4,000 IPs per page, stops when   │
-│      no more data available)           │
-│  4. Import All IPs to "Malware-List"    │
-│  5. Validate Import Success             │
-│  6. Remove Old Entries (if successful)  │
-│  7. Rollback on Failure (if needed)    │
-│  8. Re-enable Differential Scheduler   │
-└─────────────────────────────────────────┘
+┌──────────────────────────────────────────┐
+│  1. Disable Differential Scheduler       │
+│  2. Rename Existing Entries              │
+│  3. Download Pages Automatically         │
+│     (4,000 IPs per page, stops when      │
+│      no more data available)             │
+│  4. Import All IPs to "Malware-List"     │
+│  5. Validate Import Success              │
+│  6. Remove Old Entries (if successful)   │
+│  7. Rollback on Failure (if needed)      │
+│  8. Re-enable Differential Scheduler     │
+└──────────────────────────────────────────┘
 ```
 
 **Features:**
