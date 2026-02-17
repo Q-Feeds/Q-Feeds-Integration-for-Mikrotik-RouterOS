@@ -57,7 +57,7 @@ Create two schedulers in RouterOS:
 | Scheduler Name | Script | Recommended Schedule |
 |---------------|--------|---------------------|
 | `Malware Update - Full` | Malware Update - Full | Weekly or Daily |
-| `Malware Update - Diff` | Malware Update - Diff | Every 20 minutes |
+| `Malware Update - Diff` | Malware Update - Diff | See your license: Community 1/day, Plus 4h, Premium 20m |
 
 > **Note:** The full import script automatically manages the differential scheduler's state to prevent conflicts.
 
@@ -114,7 +114,7 @@ Performs a complete refresh of the malware IP blocklist:
 
 ### Differential Update Script (`Malware Import DIFF.rsc`)
 
-Performs incremental updates by processing only changes:
+Performs incremental updates by processing only changes since your last pull:
 
 ```
 ┌─────────────────────────────────────────┐
@@ -125,12 +125,18 @@ Performs incremental updates by processing only changes:
 └─────────────────────────────────────────┘
 ```
 
+**API-Key Specific Diff:**
+The differential update is **per API key** and **based on your license**:
+- The API returns only changes since your last successful pull (full or diff). Each API key gets its own diff tailored to when that key last fetched data.
+- **License-based filtering**: If your license has an IOC age/cadence setting (e.g. 4-hour stability), the diff respects that—you receive only additions and removals that match your license’s update cadence.
+- **Run FULL first**: If you have never pulled the feed before, the diff will be empty until you run the Full Import script once.
+
 **Features:**
 - ✅ **IPv4 & IPv6 Support**: Handles both IP address formats
 - ✅ **CIDR Support**: Supports CIDR notation
 - ✅ **Input Validation**: Proper IP address validation
 
-**When to run:** Every 20 minutes for quick updates
+**When to run:** Adjust based on your license—Community: once per day; Plus: every 4 hours; Premium: every 20 minutes
 
 ### Coordination Mechanism
 
@@ -241,9 +247,9 @@ Before deploying, configure both scripts:
     on-event="Malware Update - Diff"
 ```
 
-**Recommended schedules:**
+**Recommended schedules (match your license):**
 - **Full Import**: Weekly (`interval=7d`) or Daily (`interval=1d`)
-- **Differential**: Every 20 minutes (`interval=20m`)
+- **Differential**: Community `interval=1d`, Plus `interval=4h`, Premium `interval=20m`
 
 ---
 
@@ -330,6 +336,10 @@ Check logs to monitor script execution:
 - If using `useDynamic="yes"` (default), entries are RAM-only and lost on reboot
 - This is normal - entries will be repopulated when schedulers run
 - To persist across reboots, set `useDynamic="no"` (not recommended for frequent updates)
+
+**Differential updates always empty?**
+- Run the Full Import script first. The diff only returns changes *since your last pull*; if you have never pulled before, there is no baseline to diff against
+- Ensure you use the same API key for both FULL and DIFF scripts—each key has its own pull history
 
 ---
 
